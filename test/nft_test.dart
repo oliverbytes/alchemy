@@ -24,7 +24,7 @@ void main() {
         owner: owner,
       );
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
       EnhancedNFTResponse resp = nfts.right;
       var spamNfts = resp.ownedNfts.where((element) => element.spamInfo != null).where((element) {
@@ -51,7 +51,7 @@ void main() {
         contractAddress: '0x000386e3f7559d9b6a2f5c46b4ad1a9587d59dc3',
       );
       if (result.isLeft) {
-        fail(result.left.error.message);
+        fail(result.left.error.message!);
       }
 
       print(result.right);
@@ -66,7 +66,7 @@ void main() {
           orderBy: OrderBy.transferTime,
           contractAddresses: ['0x000386e3f7559d9b6a2f5c46b4ad1a9587d59dc3']);
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
 
       EnhancedNFTResponse resp = nfts.right;
@@ -99,7 +99,7 @@ void main() {
     test('getOwnersForToken', () async {
       var nfts = await api.getOwnersForToken(contractAddress: address, tokenId: token);
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
       EnhancedNFTOwners resp = nfts.right;
       expect(resp, isNotNull);
@@ -110,7 +110,7 @@ void main() {
     test('getOwnersForCollection', () async {
       var nfts = await api.getOwnersForCollection(contractAddress: address);
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
       EnhancedNFTOwnerAddresses resp = nfts.right;
       expect(resp, isNotNull);
@@ -122,7 +122,7 @@ void main() {
     test('getOwnersForCollectionWithTokenBalances', () async {
       var nfts = await api.getOwnersForCollection(contractAddress: address, withTokenBalances: true);
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
       EnhancedNFTOwnerAddresses resp = nfts.right;
       expect(resp, isNotNull);
@@ -139,7 +139,7 @@ void main() {
         contractAddress: '0xe785E82358879F061BC3dcAC6f0444462D4b5330',
       );
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
       bool resp = nfts.right;
       expect(resp, isNotNull);
@@ -152,7 +152,7 @@ void main() {
         filters: [NFTSpamFilter.AIRDROPS, NFTSpamFilter.SPAM],
       );
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
       EnhancedNFTContracts resp = nfts.right;
       expect(resp, isNotNull);
@@ -176,7 +176,7 @@ void main() {
         refreshCache: false,
       );
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
       EnhancedNFT resp = nfts.right;
       expect(resp, isNotNull);
@@ -193,7 +193,7 @@ void main() {
         contractAddress: '0xe785E82358879F061BC3dcAC6f0444462D4b5330',
       );
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
       EnhancedNFTContractMetadata resp = nfts.right;
       expect(resp, isNotNull);
@@ -208,7 +208,7 @@ void main() {
         contractAddress: '0xe785E82358879F061BC3dcAC6f0444462D4b5330',
       );
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
       EnhancedNFTReingestContract resp = nfts.right;
       expect(resp, isNotNull);
@@ -222,7 +222,7 @@ void main() {
         query: 'sunglasses',
       );
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
       List resp = nfts.right;
       expect(resp, isNotNull);
@@ -239,7 +239,7 @@ void main() {
         withMetadata: false,
       );
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
       EnhancedNFTCollection resp = nfts.right;
       expect(resp, isNotNull);
@@ -254,7 +254,7 @@ void main() {
         withMetadata: true,
       );
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
       EnhancedNFTCollection resp = nfts.right;
       expect(resp, isNotNull);
@@ -304,7 +304,7 @@ void main() {
     test('getSpamContracts', () async {
       var nfts = await api.getSpamContracts();
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
       List resp = nfts.right;
       expect(resp, isNotNull);
@@ -317,7 +317,7 @@ void main() {
         contractAddress: '0xe785E82358879F061BC3dcAC6f0444462D4b5330',
       );
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
       bool resp = nfts.right;
       expect(resp, isNotNull);
@@ -330,7 +330,7 @@ void main() {
         tokenId: '44',
       );
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
       bool resp = nfts.right;
       expect(resp, isNotNull);
@@ -342,7 +342,7 @@ void main() {
         contractAddress: '0xe785E82358879F061BC3dcAC6f0444462D4b5330',
       );
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
       EnhancedNFTCollectionFloorPrice resp = nfts.right;
       expect(resp, isNotNull);
@@ -361,7 +361,7 @@ void main() {
         tokenId: '44',
       );
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
       NFTSalesResponse resp = nfts.right;
       expect(resp, isNotNull);
@@ -377,7 +377,7 @@ void main() {
         tokenId: '44',
       );
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
       List<NFTRarity> resp = nfts.right;
       expect(resp, isNotNull);
@@ -392,7 +392,7 @@ void main() {
         contractAddress: '0xe785E82358879F061BC3dcAC6f0444462D4b5330',
       );
       if (nfts.isLeft) {
-        fail(nfts.left.error.message);
+        fail(nfts.left.error.message!);
       }
       NFTAttributeSummary resp = nfts.right;
       expect(resp, isNotNull);
