@@ -35,6 +35,7 @@ class EnhancedNFTAPI with AlchemyConsoleMixin {
     bool withMetadata = true,
     int? tokenUriTimeoutInMs,
     List<NFTSpamFilter> filters = const [],
+    List<NFTSpamFilter> excludeFilters = const [],
     OrderBy orderBy = OrderBy.desc,
     SpamConfidenceLevel? spamConfidenceLevel,
   }) async {
@@ -45,6 +46,7 @@ class EnhancedNFTAPI with AlchemyConsoleMixin {
       'withMetadata': withMetadata,
       'tokenUriTimeoutInMs': tokenUriTimeoutInMs,
       'includeFilters[]': filters.map((e) => e.toParam()).toList(),
+      'excludeFilters[]': excludeFilters.map((e) => e.toParam()).toList(),
       'orderBy': orderBy.toParam(),
     };
 
@@ -128,6 +130,7 @@ class EnhancedNFTAPI with AlchemyConsoleMixin {
     required String owner,
     String? pageKey,
     List<NFTSpamFilter> filters = const [],
+    List<NFTSpamFilter> excludeFilters = const [],
     OrderBy orderBy = OrderBy.desc,
   }) async {
     final result = await httpClient.request(
@@ -137,6 +140,7 @@ class EnhancedNFTAPI with AlchemyConsoleMixin {
         'owner': owner,
         'pageKey': pageKey,
         'includeFilters[]': filters.map((e) => e.toParam()).toList(),
+        'excludeFilters[]': excludeFilters.map((e) => e.toParam()).toList(),
         'orderBy': orderBy.toParam(),
       },
     );
