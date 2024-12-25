@@ -1,26 +1,26 @@
 name: alchemy_web3
 description: An Alchemy Platform client for Flutter & Dart
-version: 0.2.0
+version: 0.2.1
 homepage: https://github.com/oliverbytes/alchemy_web3
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  logger: ^2.0.2+1
-  decimal: ^2.3.2
-  either_dart: ^0.4.0
+  logger: ^2.4.0
+  decimal: ^3.0.2
+  either_dart: ^1.0.0
   # NETWORK
-  dio: ^5.1.1
+  dio: ^5.6.0
   json_rpc_2: ^3.0.2
-  web_socket_channel: ^2.3.0
+  web_socket_channel: ^3.0.1
   # CRYPTO
-  pointycastle: ^3.6.2
+  pointycastle: ^3.9.1
   convert: ^3.1.1
   # WEB3
-  web3dart: ^2.6.1
+  web3dart: ^2.7.3
 
 
 dev_dependencies:
-  lints: ^2.0.1
-  test: ^1.21.4
+  lints: ^4.0.0
+  test: ^1.25.8

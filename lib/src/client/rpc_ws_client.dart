@@ -48,52 +48,22 @@ class RpcWsClient with AlchemyConsoleMixin implements Client {
     required String method,
     required List<dynamic> params,
   }) async {
-    if (url.isEmpty) throw 'Client URL is empty';
-    if (wsStatus != WsStatus.running) await restart();
     if (verbose) console.trace('Requesting... $url -> $method\n$params');
 
-    // RESTART IF NECESSARY
-    if (isClosed) {
-      await restart();
-
-      if (isClosed) {
-        return Left(RPCErrorData(
-          code: 0,
-          message: 'No Internet Connection',
-        ));
-      }
-    }
-
+    final error = await _validateRequest(method, params);
+    if (error != null) return error;
     // SEND REQUEST
     try {
       final response = await sendRequest(method, params);
       if (verbose) console.debug('Response: $response');
 
       if (response == null) {
-        return Left(RPCErrorData(
-          code: 200,
-          message: 'Null Response',
-        ));
+        return _nullResponseLeft();
       }
 
       return Right(response ?? '');
-    } on DioException catch (e) {
-      if (e.response == null) {
-        return Left(
-          RPCErrorData(
-            code: 0,
-            message: 'Local Error: ${e.type}: ${e.message}',
-          ),
-        );
-      }
-
-      return Left(RPCErrorData.fromJson(e.response!.data));
-    } catch (e) {
-      // different error
-      return Left(RPCErrorData(
-        code: 0,
-        message: 'Unknown Error: $e',
-      ));
+    } catch (e, st) {
+      return _handleException(e, st);
     }
   }
 
@@ -156,5 +126,59 @@ class RpcWsClient with AlchemyConsoleMixin implements Client {
   void sendNotification(String method, [parameters]) {}
 
   @override
-  void withBatch(Function() callback) {}
+  void withBatch(Function() callback) {
+    wsClient!.withBatch(callback);
+  }
+
+  Left<RPCErrorData, dynamic> _nullResponseLeft() {
+    return Left(RPCErrorData(
+      code: 200,
+      message: 'Null Response',
+    ));
+  }
+
+  Left<RPCErrorData, dynamic> _handleException(Object e, StackTrace? st) {
+    if (e is DioException) {
+      if (e.response == null) {
+        return Left(
+          RPCErrorData(
+            code: 0,
+            message: 'Local Error: ${e.type}: ${e.message}',
+          ),
+        );
+      }
+      return Left(RPCErrorData.fromJson(e.response!.data));
+    }
+    // different error
+    return Left(
+      RPCErrorData(
+        code: 0,
+        message: 'Unknown Error: $e',
+      ),
+    );
+  }
+
+  /// validate before sending request
+  /// return error if any of the the connection is closed even after restarting
+  Future<Left<RPCErrorData, dynamic>?> _validateRequest(
+    String method,
+    List<dynamic> params,
+  ) async {
+    if (url.isEmpty) throw 'Client URL is empty';
+    if (wsStatus != WsStatus.running) await restart();
+
+    // RESTART IF NECESSARY
+    if (isClosed) {
+      await restart();
+
+      if (isClosed) {
+        return Left(RPCErrorData(
+          code: 0,
+          message: 'No Internet Connection',
+        ));
+      }
+    }
+
+    return null;
+  }
 }

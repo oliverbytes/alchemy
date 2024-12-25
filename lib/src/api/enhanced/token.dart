@@ -47,18 +47,19 @@ class EnhancedTokenAPI with AlchemyConsoleMixin {
 
     ///pageKey: Applies only to the erc20 request type. A string address used for pagination. If more results are available, a pageKey will be returned in the response.
     // maxCount: Applies only to the erc20 request type. Specifies the maximum count of token balances to return per call. This value defaults to 100 and is currently capped at 100.
-    (String pageKey, String maxCount)? pageInfo,
+    String? pageKey,
+    int? maxCount,
   }) async {
     var params = [
       address,
       contractAddresses.isNotEmpty ? contractAddresses : tokensSpecification,
     ];
 
-    if (pageInfo != null) {
-      params.add({
-        "pageKey": pageInfo.$1,
-        "maxCount": pageInfo.$2,
-      });
+    if (pageKey != null) {
+      params.add({"pageKey": pageKey});
+    }
+    if (maxCount != null) {
+      params.add({"maxCount": maxCount});
     }
 
     final result = await wsClient.request(

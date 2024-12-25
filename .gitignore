@@ -9,6 +9,10 @@
 .history
 .svn/
 
+#Flutter version management
+.fvm/
+.fmvrc
+
 # IntelliJ related
 *.iml
 *.ipr
